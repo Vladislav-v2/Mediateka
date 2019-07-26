@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище MediatekaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Автори">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Автор" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Виконавці">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Виконавець" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Дата народження" Type="date" />
+          <Property Name="id_Країна" Type="int" />
+          <Property Name="id_музичний жанр" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Композиції">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Виконавець" Type="int" Nullable="false" />
+          <Property Name="Композиція" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="id_Автор" Type="int" Nullable="false" />
+          <Property Name="Тривалість" Type="time" Precision="2" Nullable="false" />
+          <Property Name="Слова" Type="text" />
+          <Property Name="Обсяг файлу(мб)" Type="real" Nullable="false" />
+          <Property Name="Дата створення" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Країни">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Країна" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Музичні жанри">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Музичні жанри" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Виконавці_Країни">
+          <End Role="Країни" Type="Self.Країни" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Виконавці" Type="Self.Виконавці" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Країни">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Виконавці">
+              <PropertyRef Name="id_Країна" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Виконавці_Музичні жанри">
+          <End Role="Музичні жанри" Type="Self.Музичні жанри" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Виконавці" Type="Self.Виконавці" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Музичні жанри">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Виконавці">
+              <PropertyRef Name="id_музичний жанр" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Композиції_Автори">
+          <End Role="Автори" Type="Self.Автори" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Композиції" Type="Self.Композиції" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Автори">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Композиції">
+              <PropertyRef Name="id_Автор" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Композиції_Виконавці">
+          <End Role="Виконавці" Type="Self.Виконавці" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Композиції" Type="Self.Композиції" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Виконавці">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Композиції">
+              <PropertyRef Name="id_Виконавець" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище MediatekaModelContainer">
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Автори" EntityType="Self.Автори" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Виконавці" EntityType="Self.Виконавці" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Композиції" EntityType="Self.Композиції" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Країни" EntityType="Self.Країни" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Музичні жанри" EntityType="Self.Музичні жанри" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Виконавці_Країни" Association="Self.FK_Виконавці_Країни">
+            <End Role="Країни" EntitySet="Країни" />
+            <End Role="Виконавці" EntitySet="Виконавці" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Виконавці_Музичні жанри" Association="Self.FK_Виконавці_Музичні жанри">
+            <End Role="Музичні жанри" EntitySet="Музичні жанри" />
+            <End Role="Виконавці" EntitySet="Виконавці" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Композиції_Автори" Association="Self.FK_Композиції_Автори">
+            <End Role="Автори" EntitySet="Автори" />
+            <End Role="Композиції" EntitySet="Композиції" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Композиції_Виконавці" Association="Self.FK_Композиції_Виконавці">
+            <End Role="Виконавці" EntitySet="Виконавці" />
+            <End Role="Композиції" EntitySet="Композиції" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MediatekaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Автори">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Автор" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Композиції" Relationship="Self.FK_Композиції_Автори" FromRole="Автори" ToRole="Композиції" />
+        </EntityType>
+        <EntityType Name="Виконавці">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Виконавець" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Дата_народження" Type="DateTime" Precision="0" />
+          <Property Name="id_Країна" Type="Int32" />
+          <Property Name="id_музичний_жанр" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Країни" Relationship="Self.FK_Виконавці_Країни" FromRole="Виконавці" ToRole="Країни" />
+          <NavigationProperty Name="Музичні_жанри" Relationship="Self.FK_Виконавці_Музичні_жанри" FromRole="Виконавці" ToRole="Музичні_жанри" />
+          <NavigationProperty Name="Композиції" Relationship="Self.FK_Композиції_Виконавці" FromRole="Виконавці" ToRole="Композиції" />
+        </EntityType>
+        <EntityType Name="Композиції">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Виконавець" Type="Int32" Nullable="false" />
+          <Property Name="Композиція" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_Автор" Type="Int32" Nullable="false" />
+          <Property Name="Тривалість" Type="Time" Nullable="false" Precision="2" />
+          <Property Name="Слова" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Обсяг_файлу_мб_" Type="Single" Nullable="false" />
+          <Property Name="Дата_створення" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Автори" Relationship="Self.FK_Композиції_Автори" FromRole="Композиції" ToRole="Автори" />
+          <NavigationProperty Name="Виконавці" Relationship="Self.FK_Композиції_Виконавці" FromRole="Композиції" ToRole="Виконавці" />
+        </EntityType>
+        <EntityType Name="Країни">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Країна" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Виконавці" Relationship="Self.FK_Виконавці_Країни" FromRole="Країни" ToRole="Виконавці" />
+        </EntityType>
+        <EntityType Name="Музичні_жанри">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Музичні_жанри1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Виконавці" Relationship="Self.FK_Виконавці_Музичні_жанри" FromRole="Музичні_жанри" ToRole="Виконавці" />
+        </EntityType>
+        <Association Name="FK_Композиції_Автори">
+          <End Role="Автори" Type="Self.Автори" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Композиції" Type="Self.Композиції" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Автори">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Композиції">
+              <PropertyRef Name="id_Автор" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Виконавці_Країни">
+          <End Role="Країни" Type="Self.Країни" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Виконавці" Type="Self.Виконавці" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Країни">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Виконавці">
+              <PropertyRef Name="id_Країна" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Виконавці_Музичні_жанри">
+          <End Role="Музичні_жанри" Type="Self.Музичні_жанри" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Виконавці" Type="Self.Виконавці" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Музичні_жанри">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Виконавці">
+              <PropertyRef Name="id_музичний_жанр" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Композиції_Виконавці">
+          <End Role="Виконавці" Type="Self.Виконавці" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Композиції" Type="Self.Композиції" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Виконавці">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Композиції">
+              <PropertyRef Name="id_Виконавець" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MediatekaEntities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Автори" EntityType="Self.Автори" />
+          <EntitySet Name="Виконавці" EntityType="Self.Виконавці" />
+          <EntitySet Name="Композиції" EntityType="Self.Композиції" />
+          <EntitySet Name="Країни" EntityType="Self.Країни" />
+          <EntitySet Name="Музичні_жанри" EntityType="Self.Музичні_жанри" />
+          <AssociationSet Name="FK_Композиції_Автори" Association="Self.FK_Композиції_Автори">
+            <End Role="Автори" EntitySet="Автори" />
+            <End Role="Композиції" EntitySet="Композиції" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Виконавці_Країни" Association="Self.FK_Виконавці_Країни">
+            <End Role="Країни" EntitySet="Країни" />
+            <End Role="Виконавці" EntitySet="Виконавці" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Виконавці_Музичні_жанри" Association="Self.FK_Виконавці_Музичні_жанри">
+            <End Role="Музичні_жанри" EntitySet="Музичні_жанри" />
+            <End Role="Виконавці" EntitySet="Виконавці" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Композиції_Виконавці" Association="Self.FK_Композиції_Виконавці">
+            <End Role="Виконавці" EntitySet="Виконавці" />
+            <End Role="Композиції" EntitySet="Композиції" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище MediatekaModelContainer" CdmEntityContainer="MediatekaEntities3">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="MediatekaModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Автори">
+            <EntityTypeMapping TypeName="MediatekaModel.Автори">
+              <MappingFragment StoreEntitySet="Автори">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Автор" ColumnName="Автор" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Виконавці">
+            <EntityTypeMapping TypeName="MediatekaModel.Виконавці">
+              <MappingFragment StoreEntitySet="Виконавці">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Виконавець" ColumnName="Виконавець" />
+                <ScalarProperty Name="Дата_народження" ColumnName="Дата народження" />
+                <ScalarProperty Name="id_Країна" ColumnName="id_Країна" />
+                <ScalarProperty Name="id_музичний_жанр" ColumnName="id_музичний жанр" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Композиції">
+            <EntityTypeMapping TypeName="MediatekaModel.Композиції">
+              <MappingFragment StoreEntitySet="Композиції">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_Виконавець" ColumnName="id_Виконавець" />
+                <ScalarProperty Name="Композиція" ColumnName="Композиція" />
+                <ScalarProperty Name="id_Автор" ColumnName="id_Автор" />
+                <ScalarProperty Name="Тривалість" ColumnName="Тривалість" />
+                <ScalarProperty Name="Слова" ColumnName="Слова" />
+                <ScalarProperty Name="Обсяг_файлу_мб_" ColumnName="Обсяг файлу(мб)" />
+                <ScalarProperty Name="Дата_створення" ColumnName="Дата створення" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Країни">
+            <EntityTypeMapping TypeName="MediatekaModel.Країни">
+              <MappingFragment StoreEntitySet="Країни">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Країна" ColumnName="Країна" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Музичні_жанри">
+            <EntityTypeMapping TypeName="MediatekaModel.Музичні_жанри">
+              <MappingFragment StoreEntitySet="Музичні жанри">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Музичні_жанри1" ColumnName="Музичні жанри" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

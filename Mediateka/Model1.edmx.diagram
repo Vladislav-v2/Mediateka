@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="34d01a8ac1814d6f8539d965bc8c2ac3" Name="Diagram1">
+        <EntityTypeShape EntityType="MediatekaModel.User" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MediatekaModel.Автори" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MediatekaModel.Виконавці" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MediatekaModel.Композиції" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="MediatekaModel.Країни" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MediatekaModel.Музичні_жанри" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <AssociationConnector Association="MediatekaModel.FK_Композиції_Автори" ManuallyRouted="false" />
+        <AssociationConnector Association="MediatekaModel.FK_Виконавці_Країни" ManuallyRouted="false" />
+        <AssociationConnector Association="MediatekaModel.FK_Виконавці_Музичні_жанри" ManuallyRouted="false" />
+        <AssociationConnector Association="MediatekaModel.FK_Композиції_Виконавці" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
